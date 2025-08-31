@@ -21,6 +21,7 @@ const KeywordsPage = () => {
                 const data = await res.json();
                 setKeywords(data);  // Сохранение данных в состоянии
             } catch (err) {
+                toast.error('Серверная ошибка!')
                 toast.error('Ошибка при получении данных!')
                 setError(err.message);
             } finally {

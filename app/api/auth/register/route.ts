@@ -32,7 +32,8 @@ export async function POST(req: Request) {
             userName,
             email,
             password: hashed,
-            isPro: false
+            isPro: false,
+
 
         })
 
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
             user: {
                 email,
                 userName,
+                createdAt: new Date()
             },
         })
 

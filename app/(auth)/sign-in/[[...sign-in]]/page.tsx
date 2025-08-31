@@ -3,12 +3,14 @@ import React, {useEffect, useState} from 'react'
 import { Input } from '@/components/ui/input'
 import axios from "axios";
 import {toast} from "sonner";
+import {signInWithPopup} from 'firebase/auth'
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/context/useAuth";
 import {Label} from "@/components/ui/label";
 import {IconBrandGithub, IconBrandGoogle, IconBrandOnlyfans} from "@tabler/icons-react";
 import {cn} from "@/lib/utils";
 import Link from "next/link";
+import {auth, provider} from "@/lib/firebase";
 import {Loader2Icon} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
@@ -47,6 +49,34 @@ function SignIn() {
 
         toast.success('Вы успешно вошли в аккаунт')
     }
+    const handleGoogleSignIn = async () => {
+        try {
+
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            const res = await fetch("/api/auth/google", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: user.email,
+                    userName: user.displayName,
+                    avatarUrl: user.photoURL
+                }),
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Ошибка входа");
+
+            setUser(data.user);
+            localStorage.setItem("token", data.token);
+
+            router.push("/dashboard");
+            toast.success("Успешный вход через Google!");
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    };
     useEffect(() => {
         if (user) {
             router.replace("/dashboard");
@@ -62,7 +92,7 @@ function SignIn() {
                     Войдите в ваш аккаунт AI-Tube
                 </p>
 
-                <Button className='w-full hover:scale-105 transition-all cursor-pointer' variant='outline'>
+                <Button onClick={handleGoogleSignIn} className='w-full hover:scale-105 transition-all cursor-pointer' variant='outline'>
                     <FaGoogle/>
                     С помощью Google
                 </Button>

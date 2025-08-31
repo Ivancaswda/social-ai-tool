@@ -46,6 +46,7 @@ const TrendingKeywords = () => {
                 setLoading(false)
                 router.push("/buy-pro")
             } else {
+                toast.error('Server error! 400')
                 console.error("Error fetching keywords:", err)
             }
 

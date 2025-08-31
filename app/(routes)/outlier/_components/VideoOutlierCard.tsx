@@ -5,7 +5,7 @@ import {Eye, ThumbsUp} from "lucide-react";
 import {VideoInfoOutlier} from "@/app/(routes)/outlier/page";
 import {
     Tooltip,
-    TooltipContent,
+    TooltipContent, TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 type props = {
@@ -18,7 +18,8 @@ const VideoOutlierCard = ({videoInfo}: props) => {
 
 
     return (
-        <div className='p-3 border rounded-2xl relative cursor-pointer hover:scale-105 transition-all'>
+        <TooltipProvider>
+            <div className='p-3 border rounded-2xl relative cursor-pointer hover:scale-105 transition-all'>
             <Tooltip>
                 <TooltipTrigger asChild><h2
                     className='absolute right-3 p-1 bg-green-600 text-white rounded'>{videoInfo.smartScore}x</h2>
@@ -48,6 +49,7 @@ const VideoOutlierCard = ({videoInfo}: props) => {
                 </Tooltip>
             </div>
         </div>
+        </TooltipProvider>
     )
 }
 export default VideoOutlierCard

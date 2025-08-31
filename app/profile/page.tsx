@@ -79,6 +79,10 @@ const ProfilePage = () => {
                     <h1 className="text-2xl font-bold">{user?.userName || "Имя пользователя"}</h1>
                     <p className="text-gray-500">{user?.email}</p>
                 </div>
+                {user?.isPro && <div className='px-4 py-2 bg-green-50 text-green-500 border-green-500 rounded-xl '>
+                    Pro
+                </div> }
+
             </div>
 
             {/* Контент */}

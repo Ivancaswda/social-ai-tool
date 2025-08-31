@@ -1,10 +1,12 @@
-import { integer, pgTable, varchar, json, boolean } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, json, boolean, timestamp } from "drizzle-orm/pg-core";
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     userName: varchar({ length: 255 }).notNull(),
     email: varchar({ length: 255 }).notNull().unique(),
     password: varchar("password", { length: 255 }).notNull(),
-    isPro: boolean()
+    isPro: boolean(),
+    avatarUrl: varchar(),
+    createdAt: timestamp("created_at").defaultNow()
 });
 
 export const AiThumbnailTable  = pgTable('thumbnails', {

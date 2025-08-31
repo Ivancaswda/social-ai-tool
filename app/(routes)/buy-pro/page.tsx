@@ -29,7 +29,7 @@ const BuyPro = () => {
 
                 {/* Бесплатный тариф */}
                 <div className="bg-white shadow-xl rounded-3xl p-8 w-80 flex flex-col items-center text-center hover:scale-105 transition-transform">
-                    <h2 className="text-2xl font-semibold mb-4">Бесплатный тариф</h2>
+                    <h2 className="text-2xl text-gray-500 font-semibold mb-4">Бесплатный тариф</h2>
                     <p className="text-gray-500 mb-6">Доступно: 5 генераций + 5 ключевых слов</p>
                     <div className="text-green-600 font-bold text-xl mb-6">0 ₽</div>
                     <button
@@ -44,7 +44,7 @@ const BuyPro = () => {
                 <div className="bg-green-600 shadow-xl rounded-3xl p-8 w-80 flex flex-col items-center text-center text-white hover:scale-105 transition-transform">
                     <h2 className="text-2xl font-semibold mb-4">Pro Sub</h2>
                     <p className="text-green-100 mb-6">Безлимитный доступ ко всем генерациям и ключевым словам</p>
-                    <div className="text-white font-bold text-xl mb-6">2990 ₽ / месяц</div>
+                    <div className="text-white font-bold text-xl mb-6">299 ₽ / месяц</div>
                     <button
                         onClick={handleBuy}
                         className={`bg-white text-green-600 font-semibold py-3 px-6 rounded-xl w-full hover:bg-gray-100 transition`}

@@ -60,6 +60,7 @@ const AiContentGenerator = () => {
                 setLoading(false)
                 router.push("/buy-pro")
             } else {
+                toast.error('Серверная ошибка!')
                 console.error("Ошибка генерации:", err)
             }
 

@@ -16,6 +16,7 @@ import Link from "next/link";
 import {FaInstagram, FaVk} from "react-icons/fa";
 import {FaXTwitter} from "react-icons/fa6";
 import { motion } from 'framer-motion'
+import {Loader2Icon} from "lucide-react";
 
 export default function Home() {
 
@@ -27,41 +28,42 @@ export default function Home() {
       transition: { delay: custom * 0.2, duration: 0.6, ease: 'easeOut' },
     }),
   }
-  let {user} = useAuth()
+  let {user, loading} = useAuth()
   const path = usePathname();
   console.log(user)
   const images = [
-    "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
-    "https://assets.aceternity.com/animated-modal.png",
-    "https://assets.aceternity.com/animated-testimonials.webp",
-    "https://assets.aceternity.com/cloudinary_bkp/Tooltip_luwy44.png",
-    "https://assets.aceternity.com/github-globe.png",
-    "https://assets.aceternity.com/glare-card.png",
-    "https://assets.aceternity.com/layout-grid.png",
-    "https://assets.aceternity.com/flip-text.png",
-    "https://assets.aceternity.com/hero-highlight.png",
-    "https://assets.aceternity.com/carousel.webp",
-    "https://assets.aceternity.com/placeholders-and-vanish-input.png",
-    "https://assets.aceternity.com/shooting-stars-and-stars-background.png",
-    "https://assets.aceternity.com/signup-form.png",
-    "https://assets.aceternity.com/cloudinary_bkp/stars_sxle3d.png",
-    "https://assets.aceternity.com/spotlight-new.webp",
-    "https://assets.aceternity.com/cloudinary_bkp/Spotlight_ar5jpr.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Parallax_Scroll_pzlatw_anfkh7.png",
-    "https://assets.aceternity.com/tabs.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Tracing_Beam_npujte.png",
-    "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
-    "https://assets.aceternity.com/glowing-effect.webp",
-    "https://assets.aceternity.com/hover-border-gradient.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Infinite_Moving_Cards_evhzur.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Lamp_hlq3ln.png",
-    "https://assets.aceternity.com/macbook-scroll.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Meteors_fye3ys.png",
-    "https://assets.aceternity.com/cloudinary_bkp/Moving_Border_yn78lv.png",
-    "https://assets.aceternity.com/multi-step-loader.png",
-    "https://assets.aceternity.com/vortex.png",
-    "https://assets.aceternity.com/wobble-card.png",
-    "https://assets.aceternity.com/world-map.webp",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/logo.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/logo.png",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/ai-content-generator.png",
+    "/logo.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+    "/thumbnail-search.png",
+    "/ai-content-generator.png",
+    "/ai-keywords.png",
+    "/ai-outlier.png",
+
   ];
   const content = [
     {
@@ -115,9 +117,13 @@ export default function Home() {
       description:
           "найдите похожее видео по картинке или по пойску используя ИИ технологии",
       content: (
-          <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
-            Пойск по превью
-          </div>
+          <Image
+              src="/thumbnail-search.png"
+              width={300}
+              height={300}
+              className="h-full w-full object-cover"
+              alt="linear board demo"
+          />
       ),
     },
   ];
@@ -195,7 +201,7 @@ export default function Home() {
       id: 4,
       content: <SkeletonFour />,
       className: "col-span-1",
-      thumbnail: '/ai-thumbnail-search.png',
+      thumbnail: '/thumbnail-search.png',
     },
     {
       id: 3,
@@ -279,7 +285,7 @@ export default function Home() {
             </div>
             <div id="navbar-collapse-with-animation" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end sm:ps-7 cursor-pointer">
-                {!user ?
+                {!user && !loading ?
                     <Link href='/sign-up' className="flex items-center gap-x-2 font-medium text-gray-500 hover:text-green-600 sm:border-s sm:border-gray-800 py-2 sm:py-0 sm:ms-4 sm:my-6 sm:ps-6 dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-green-500">
 
                        <svg className="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -289,11 +295,13 @@ export default function Home() {
 
 
                     </Link>
-                    :
+                    : loading && !user ? <div className='flex items-center justify-center'>
+                          <Loader2Icon className='animate-spin text-green-600 '/>
+                        </div> :
                     <DropdownMenu>
                       <DropdownMenuTrigger>
                         <Avatar>
-                          <AvatarImage src={user?.image} />
+                          <AvatarImage src={user?.avatarUrl} />
                           <AvatarFallback className='bg-green-600 text-white'>{user?.userName.charAt(0).toUpperCase()}</AvatarFallback>
                         </Avatar>
                       </DropdownMenuTrigger>
@@ -502,10 +510,10 @@ export default function Home() {
               <div className="w-full md:w-1/3 mb-6 md:mb-0">
                 <h4 className="text-lg font-semibold">Ссылки</h4>
                 <ul className="mt-4">
-                  <li><a href="#" className="text-neutral-200 hover:text-white">Главная</a></li>
-                  <li><a href="#" className="text-neutral-200 hover:text-white">Услуги</a></li>
-                  <li><a href="#" className="text-neutral-200 hover:text-white">О нас</a></li>
-                  <li><a href="#" className="text-neutral-200 hover:text-white">Контакты</a></li>
+                  <li><a href="/" className="text-neutral-200 hover:text-white">Главная</a></li>
+                  <li><a href="/dashboard" className="text-neutral-200 hover:text-white">Услуги</a></li>
+                  <li><a href="/" className="text-neutral-200 hover:text-white">О нас</a></li>
+                  <li><a href="/privacy-policy" className="text-neutral-200 hover:text-white">Конфидециальность</a></li>
                 </ul>
               </div>
               <div className="w-full md:w-1/3 mb-6 md:mb-0">

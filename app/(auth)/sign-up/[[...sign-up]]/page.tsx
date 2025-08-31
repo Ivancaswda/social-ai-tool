@@ -10,7 +10,8 @@ import { Loader2Icon } from 'lucide-react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
-
+import {auth, provider} from "@/lib/firebase";
+import {signInWithPopup} from 'firebase/auth'
 function SignUp() {
     const { user, loading, setUser } = useAuth()
     const [form, setForm] = useState({
@@ -46,7 +47,34 @@ function SignUp() {
             setIsLoading(false)
         }
     }
+    const handleGoogleSignUp = async () => {
+        try {
 
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            const res = await fetch("/api/auth/google", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: user.email,
+                    userName: user.displayName,
+                    avatarUrl: user.photoURL
+                }),
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Ошибка входа");
+
+            setUser(data.user);
+            localStorage.setItem("token", data.token);
+
+            router.push("/dashboard");
+            toast.success("Успешный вход через Google!");
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    };
     useEffect(() => {
         if (!loading && user) router.replace('/dashboard')
     }, [user, loading, router])
@@ -61,7 +89,7 @@ function SignUp() {
                     Создайте ваш аккаунт AI-Tube
                 </p>
 
-                <Button className="w-full hover:scale-105 transition-all" variant="outline">
+                <Button onClick={handleGoogleSignUp} className="w-full hover:scale-105 transition-all" variant="outline">
                     <FaGoogle />
                     Зарегистрироваться через Google
                 </Button>

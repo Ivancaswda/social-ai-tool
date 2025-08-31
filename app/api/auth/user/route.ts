@@ -27,7 +27,9 @@ export async function GET(req: Request) {
             user: {
                 email: user.email,
                 userName: user.userName,
-                isPro: user.isPro
+                isPro: user.isPro,
+                avatarUrl: user?.avatarUrl,
+                createdAt: user?.createdAt
             },
         })
     } catch (err: any) {

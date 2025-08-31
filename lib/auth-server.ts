@@ -15,7 +15,8 @@ async function getServerUser() {
             email: string,
             userName: string,
             id: string,
-            isPro: boolean
+            isPro: boolean,
+            avatarUrl: string
         }
         return decoded!
     } catch (err) {

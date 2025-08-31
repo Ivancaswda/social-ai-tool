@@ -11,7 +11,7 @@ import {
     LightbulbIcon,
     Settings,
     User2Icon,
-    Sun, Moon, LogOut
+    Sun, Moon, LogOut, Search
 } from "lucide-react"
 import Link from "next/link"
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
@@ -20,6 +20,7 @@ import {useTheme} from "next-themes";
 import {useAuth} from "@/context/useAuth";
 import {toast} from "sonner";
 import {FaMagic} from "react-icons/fa";
+import {BiMoney} from "react-icons/bi";
 
 export const items = [
     { title: "Главная", url: "/dashboard", icon: Home },
@@ -28,6 +29,9 @@ export const items = [
     { title: "Сгенерировать ", url: "/ai-content-generator", icon: FaMagic },
     { title: "Ваши ключевые слова", url: "/ai-keywords", icon: HistoryIcon },
     { title: "Генерации", url: "/ai-contents", icon: LightbulbIcon },
+
+    { title: "Искать по превью", url: "/thumbnail-search", icon: Search },
+    { title: "Получить премиум", url: "/buy-pro", icon: BiMoney },
     { title: "Настройки", url: "#", icon: Settings, isSettings: true },
     { title: "Профиль", url: "/profile", icon: User2Icon },
 ]
