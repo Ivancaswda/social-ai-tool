@@ -3,23 +3,32 @@ import { db } from "@/configs/db";
 import { usersTable } from "@/configs/schema";
 import { eq } from "drizzle-orm";
 
+export async function GET() {
+    return NextResponse.json({ message: "LemonSqueezy webhook endpoint. Use POST." });
+}
+
 export async function POST(req: NextRequest) {
+    let event;
     try {
-        const event = await req.json();
+        event = await req.json();
+    } catch {
+        return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
 
-        // Пример структуры LemonSqueezy webhook
-        // event.data.attributes.customer.email - email пользователя
-        // event.data.attributes.type - тип события (purchase, subscription_created и т.д.)
+    try {
+        const email = event?.data?.attributes?.user_email;
+        const status = event?.data?.attributes?.status;
+        const eventName = event?.meta?.event_name;
 
-        const email = event?.data?.attributes?.customer?.email;
-        const type = event?.data?.attributes?.type;
-
-        if (!email || !type) {
+        if (!email || !eventName) {
             return NextResponse.json({ error: "Invalid webhook payload" }, { status: 400 });
         }
 
-        // Проверяем событие покупки или активации подписки
-        if (type === "subscription_created" || type === "purchase_completed") {
+        // Проверяем событие и статус
+        if (
+            (eventName === "order_created" || eventName === "order_paid") &&
+            status === "paid"
+        ) {
             await db.update(usersTable)
                 .set({ isPro: true })
                 .where(eq(usersTable.email, email))
@@ -28,7 +37,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true });
     } catch (err) {
-        console.error(err);
+        console.error("Webhook error:", err);
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }
