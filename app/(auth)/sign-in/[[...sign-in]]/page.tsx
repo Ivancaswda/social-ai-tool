@@ -10,11 +10,12 @@ import {Label} from "@/components/ui/label";
 import {IconBrandGithub, IconBrandGoogle, IconBrandOnlyfans} from "@tabler/icons-react";
 import {cn} from "@/lib/utils";
 import Link from "next/link";
-import {auth, provider} from "@/lib/firebase";
+import {auth, provider, githubProvider} from "@/lib/firebase";
 import {Loader2Icon} from "lucide-react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {FaGithub, FaGoogle} from "react-icons/fa";
+import {FaXTwitter} from "react-icons/fa6";
 
 function SignIn() {
     const {user, setUser} = useAuth()
@@ -77,6 +78,8 @@ function SignIn() {
             toast.error(err.message);
         }
     };
+
+
     useEffect(() => {
         if (user) {
             router.replace("/dashboard");
@@ -96,10 +99,7 @@ function SignIn() {
                     <FaGoogle/>
                     С помощью Google
                 </Button>
-                <Button className='w-full hover:scale-105 transition-all cursor-pointer' variant='outline'>
-                    <FaGithub/>
-                    С помощью Github
-                </Button>
+
                 <form onSubmit={handleLogin} className="space-y-4">
                     <LabelInputContainer>
                         <Label htmlFor="email">Email</Label>

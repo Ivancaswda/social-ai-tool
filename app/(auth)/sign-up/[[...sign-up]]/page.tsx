@@ -10,8 +10,9 @@ import { Loader2Icon } from 'lucide-react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
-import {auth, provider} from "@/lib/firebase";
+import {auth, provider, githubProvider} from "@/lib/firebase";
 import {signInWithPopup} from 'firebase/auth'
+import {FaXTwitter} from "react-icons/fa6";
 function SignUp() {
     const { user, loading, setUser } = useAuth()
     const [form, setForm] = useState({
@@ -75,6 +76,10 @@ function SignUp() {
             toast.error(err.message);
         }
     };
+
+
+
+
     useEffect(() => {
         if (!loading && user) router.replace('/dashboard')
     }, [user, loading, router])
@@ -93,10 +98,8 @@ function SignUp() {
                     <FaGoogle />
                     Зарегистрироваться через Google
                 </Button>
-                <Button className="w-full hover:scale-105 transition-all" variant="outline">
-                    <FaGithub />
-                    Зарегистрироваться через GitHub
-                </Button>
+
+
 
                 <form onSubmit={handleRegister} className="space-y-4 mt-4">
                     <LabelInputContainer>

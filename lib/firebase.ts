@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, TwitterAuthProvider } from "firebase/auth";
+
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
@@ -13,5 +14,6 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const twitterProvider = new TwitterAuthProvider();
 
-export { auth, provider };
+export { auth, provider, twitterProvider };
