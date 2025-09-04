@@ -53,7 +53,7 @@ const TrendingKeywords = () => {
         }
         setLoading(false)
     }
-    const suggestions = ["YouTube Shorts", "AI Music", "Jokes 2025", "Подкасты", "VR видео"]
+    const suggestions = ["Ютуб шортс", "ИИ музыка", "Мемы 2025", "Подкасты", "Виртуальные видео"]
 
 
     return (
@@ -89,13 +89,13 @@ const TrendingKeywords = () => {
 
                     <div className="flex flex-wrap gap-2 mt-4">
                         {suggestions.map((s, i) => (
-                            <button
+                            <Button disabled={loading}
                                 key={i}
                                 onClick={() => { setUserInput(s); onFind(s) }}
                                 className="px-4 py-2 text-sm bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition"
                             >
                                 {s}
-                            </button>
+                            </Button>
                         ))}
                     </div>
                 </div>
@@ -112,7 +112,7 @@ const TrendingKeywords = () => {
                 </div>
             )}
 
-            {/* Результаты */}
+
             <KeywordsList loading={loading} keywordsList={keywordsList?.keywordsList}/>
         </div>
     )

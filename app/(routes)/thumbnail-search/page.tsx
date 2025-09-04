@@ -58,7 +58,7 @@ const ThumbnailSearch = () => {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen py-8">
+        <div className=" min-h-screen py-8">
             <div className="container mx-auto px-4 sm:px-10 lg:px-24">
                 <div className="flex flex-col items-center gap-4 mb-10">
                     <h2 className="text-3xl font-bold text-green-600">Поиск по превью AI</h2>

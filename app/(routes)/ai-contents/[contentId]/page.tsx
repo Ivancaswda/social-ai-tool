@@ -6,7 +6,10 @@ import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import {Loader2Icon, TriangleAlert} from "lucide-react";
 import Link from "next/link";
-import {FaMagic, FaWizardsOfTheCoast} from "react-icons/fa";
+import {FaMagic, FaRegCopy, FaWizardsOfTheCoast} from "react-icons/fa";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {Button} from "@/components/ui/button";
+import {toast} from "sonner";
 
 const ContentDetailPage = () => {
     const params = useParams()
@@ -27,7 +30,14 @@ const ContentDetailPage = () => {
         }
         fetchContent()
     }, [contentId])
-
+    const handleCopy = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            toast.success("Текст скопирован в буфер обмена!");
+        } catch (err) {
+            console.error("Ошибка при копировании:", err);
+        }
+    };
     if (loading) return <div className='flex items-center font-semibold text-green-600 justify-center w-full h-full flex-col gap-3'>
         <Loader2Icon className='animate-spin text-green-600'/>
         Загрузка...
@@ -75,19 +85,37 @@ const ContentDetailPage = () => {
                 <h2 className="text-xl font-semibold mb-4">Промпты для генерации изображений</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {content.content.image_prompts.map((item, index) => (
-                        <div key={index} className="border rounded p-4 flex flex-col gap-2">
-                            <h3 className="font-semibold text-lg">{item.heading}</h3>
-                            <p className="text-gray-600">{item.prompt}</p>
-                            {/* Ссылка на генерацию изображения */}
-                            <Link
-                                href={`https://example.com/generate?prompt=${encodeURIComponent(item.prompt)}`}
-                                target="_blank"
-                                className="mt-2 inline-block text-white  flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-center"
-                            >
-                                <FaMagic/>
-                                Сгенерировать изображение
-                            </Link>
-                        </div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div key={index} className="border rounded p-4 flex flex-col gap-2">
+                                        <h3 className="font-semibold text-lg">{item.heading}</h3>
+                                        <p className="text-gray-600">{item.prompt}</p>
+
+                                        <Link
+                                            href={`https://huggingface.co/spaces/stabilityai/stable-diffusion?prompt=${encodeURIComponent(item.prompt)}`}
+                                            target="_blank"
+                                            className="mt-2 inline-block text-white flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-center"
+                                        >
+                                            <FaMagic/>
+                                            Сгенерировать изображение
+                                        </Link>
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <div className="flex items-center justify-between bg-gray-100 p-2 rounded">
+
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => handleCopy(item.prompt)}
+                                        >
+                                            <FaRegCopy className='text-black' />
+                                        </Button>
+                                    </div>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     ))}
                 </div>
             </div>

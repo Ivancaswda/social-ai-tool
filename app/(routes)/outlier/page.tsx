@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Loader2Icon, Search } from "lucide-react"
 import axios from "axios"
+
 import VideoOutlierCard from "@/app/(routes)/outlier/_components/VideoOutlierCard"
 import VideoListSkeleton from "@/app/_components/VideoListSkeleton"
 import { FaMagic, FaSearch } from "react-icons/fa"
@@ -30,7 +31,7 @@ const Outlier = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [videoList, setVideoList] = useState<VideoInfoOutlier[]>([])
 
-    // Предложенные каналы для быстрого поиска
+
     const suggestedChannels = [
         'MrBeast',
         'A4',
@@ -56,10 +57,10 @@ const Outlier = () => {
         }
     }
 
-    // Обработчик клика по предложенному каналу
+
     const handleChannelClick = (channel: string) => {
-        setUserInput(channel)  // Устанавливаем выбранный канал в поле ввода
-        onSearch(channel)  // Запускаем поиск сразу
+        setUserInput(channel)
+        onSearch(channel)
     }
 
     return (
@@ -96,13 +97,13 @@ const Outlier = () => {
 
             <div className="flex items-center justify-center gap-4 flex-wrap mb-8">
                 {suggestedChannels.map((channel) => (
-                    <div
+                    <Button disabled={loading}
                         key={channel}
                         className="bg-green-50 text-green-500 px-4 py-2 rounded-xl border border-green-500 cursor-pointer hover:bg-green-200 transition-all"
                         onClick={() => handleChannelClick(channel)}
                     >
                         {channel}
-                    </div>
+                    </Button>
                 ))}
             </div>
 

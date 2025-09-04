@@ -19,7 +19,7 @@ const KeywordsPage = () => {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await res.json();
-                setKeywords(data);  // Сохранение данных в состоянии
+                setKeywords(data);
             } catch (err) {
                 toast.error('Серверная ошибка!')
                 toast.error('Ошибка при получении данных!')
@@ -62,7 +62,7 @@ const KeywordsPage = () => {
                 {keywords.map((item, index) => (
                     <Link href={`/ai-keywords/${item.keywordId}`}
                         key={index}
-                        className="bg-white p-4 cursor-pointer rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                        className=" p-4 cursor-pointer rounded-lg shadow-md hover:shadow-lg transition duration-300"
                     >
                         <h2 className="text-xl font-semibold">{item.userInput}</h2>
                         <p className="text-gray-500">Создано: {new Date(item.createdOn).toLocaleDateString()}</p>
