@@ -1,0 +1,5 @@
+to run application: npm run dev
+
+to run database: npx drizzle-kit studio
+
+to run inngest: npx inngest-cli@latest dev
